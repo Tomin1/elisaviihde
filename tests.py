@@ -47,7 +47,7 @@ def elisaviihde_api_mock_asshole(url, request):
 
 @urlmatch(netloc=r'(.*\.)?elisaviihde\.fi$')
 def elisaviihde_api_mock_badjson(url, request):
-  return {'status_code': 200, 'content': '{"rew. ""ssdfg}  s'}
+  return {'status_code': 200, 'content': b'{"rew. ""ssdfg}  s'}
 
 @urlmatch(netloc=r'(.*\.)?elisa\.fi$')
 def elisaviihde_sso_mock(url, request):
