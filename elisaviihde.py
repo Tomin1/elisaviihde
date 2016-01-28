@@ -204,8 +204,6 @@ class elisaviihde:
           programtime = programtime * 1000
     except Exception as exp:
       print("ERROR:", str(exp))
-    except Error as exp:
-      print("ERROR:", str(exp))
     
     return {"name": programname, "description": programdesc, "serviceName": programsrvc, "startTimeUTC": programtime}
   
