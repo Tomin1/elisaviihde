@@ -66,7 +66,7 @@ def test_elisa_init_ok():
     elisa = elisaviihde.elisaviihde(False)
   assert elisa.islogged() == False
 
-@raises(Exception)
+@raises(elisaviihde.ElisaviihdeException)
 def test_elisa_init_fail():
   with HTTMock(elisaviihde_api_mock_asshole):
     elisa = elisaviihde.elisaviihde(False)
@@ -78,13 +78,13 @@ def test_elisa_login_ok():
     assert elisa.islogged() == True
   assert elisa.gettoken() == "dummy-token"
 
-@raises(Exception)
+@raises(elisaviihde.ElisaviihdeException)
 def test_elisa_login_fail():
   with HTTMock(elisaviihde_api_mock, elisaviihde_sso_mock_asshole):
     elisa = elisaviihde.elisaviihde(False)
     elisa.login("foo", "bar")
 
-@raises(Exception)
+@raises(elisaviihde.ElisaviihdeException)
 def test_elisa_login_fail2():
   with HTTMock(elisaviihde_api_mock_badjson, elisaviihde_sso_mock):
     elisa = elisaviihde.elisaviihde(False)
@@ -104,7 +104,7 @@ def test_elisa_user_ok():
     user = elisa.getuser()
   assert user["username"] == "dummy-user"
 
-@raises(Exception)
+@raises(elisaviihde.ElisaviihdeException)
 def test_elisa_user_fail():
   with HTTMock(elisaviihde_api_mock_badjson, elisaviihde_sso_mock):
     elisa = elisaviihde.elisaviihde(False)
@@ -163,7 +163,7 @@ def test_elisa_watched_ok():
     elisa.login("foo", "bar")
     elisa.markwatched(0)
 
-@raises(Exception)
+@raises(elisaviihde.ElisaviihdeException)
 def test_elisa_watched_fail():
   with HTTMock(elisaviihde_api_mock_badjson, elisaviihde_sso_mock):
     elisa = elisaviihde.elisaviihde(False)

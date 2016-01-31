@@ -7,6 +7,9 @@
 from __future__ import print_function
 import requests, json, re, time, datetime, math
 
+class ElisaviihdeException(Exception):
+    pass
+
 class elisaviihde:
   # Init vars
   verbose = False
@@ -42,7 +45,7 @@ class elisaviihde:
     try:
       self.authcode = token.json()["code"]
     except ValueError as err:
-      raise Exception("Could not fetch sso token", err)
+      raise ElisaviihdeException("Could not fetch sso token", err)
     
     # Login with token
     if self.verbose: print("Logging in with single-sign-on token...")
@@ -68,7 +71,7 @@ class elisaviihde:
     try:
       self.userinfo = user.json()
     except ValueError as err:
-      raise Exception("Could not fetch user information", err)
+      raise ElisaviihdeException("Could not fetch user information", err)
     self.inited = True
   
   def islogged(self):
@@ -86,11 +89,12 @@ class elisaviihde:
     
   def checklogged(self):
     if not self.islogged():
-      raise Exception("Not logged in")
+      raise ElisaviihdeException("Not logged in")
   
   def checkrequest(self, statuscode):
     if not statuscode == requests.codes.ok:
-      raise Exception("API request failed with error code: " + str(statuscode))
+      raise ElisaviihdeException("API request failed with error code: " +
+              str(statuscode))
   
   def close(self):
     if self.verbose: print("Logging out and closing session...")
